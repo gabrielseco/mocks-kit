@@ -2,8 +2,7 @@
 
 A domain-free mock backend engine. An app plugs in its OpenAPI contract, its
 recordings, its store and its handlers, and gets the mock server and the replay
-test for free. The engine lives in `src/engine/`; `vendor/` holds the
-pre-engine copies from expense-tracker and crm, kept as reference.
+test for free. The engine lives in `src/engine/`.
 
 ## What the app passes in
 
