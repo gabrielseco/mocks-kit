@@ -11,14 +11,11 @@ const ALLOWED_PACKAGES = ['vitest'];
 
 function filesUnder(dir: string): string[] {
   return readdirSync(dir, { withFileTypes: true }).flatMap((entry) =>
-    entry.isDirectory()
-      ? filesUnder(join(dir, entry.name))
-      : [join(dir, entry.name)]
+    entry.isDirectory() ? filesUnder(join(dir, entry.name)) : [join(dir, entry.name)],
   );
 }
 
-const IMPORT =
-  /(?:\bfrom\s*|\bimport\s*\(\s*|\bimport\s+|\brequire\s*\(\s*)['"]([^'"]+)['"]/g;
+const IMPORT = /(?:\bfrom\s*|\bimport\s*\(\s*|\bimport\s+|\brequire\s*\(\s*)['"]([^'"]+)['"]/g;
 
 /** Why `file`'s source breaks isolation; empty when it does not. */
 export function isolationProblems(file: string, source: string): string[] {
@@ -55,7 +52,7 @@ describe('engine isolation', () => {
     '%s imports nothing of an app and names no domain',
     (_name, file) => {
       expect(isolationProblems(file, readFileSync(file, 'utf8'))).toEqual([]);
-    }
+    },
   );
 
   it('catches the imports and words it forbids', () => {

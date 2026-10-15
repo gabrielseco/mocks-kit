@@ -20,7 +20,11 @@ interface JsonReport {
   }[];
 }
 
-function runNested(): { exitCode: number | null; results: Map<string, string>; report: JsonReport } {
+function runNested(): {
+  exitCode: number | null;
+  results: Map<string, string>;
+  report: JsonReport;
+} {
   const root = resolve(__dirname, '../..');
   const out = mkdtempSync(join(tmpdir(), 'replay-drift-'));
   try {
@@ -35,13 +39,13 @@ function runNested(): { exitCode: number | null; results: Map<string, string>; r
         '--reporter=json',
         `--outputFile=${outputFile}`,
       ],
-      { cwd: root, encoding: 'utf8' }
+      { cwd: root, encoding: 'utf8' },
     );
     const report = JSON.parse(readFileSync(outputFile, 'utf8')) as JsonReport;
     const results = new Map(
       report.testResults
         .flatMap((file) => file.assertionResults)
-        .map((test) => [test.fullName, test.status])
+        .map((test) => [test.fullName, test.status]),
     );
     return { exitCode: run.status, results, report };
   } finally {
@@ -61,7 +65,9 @@ describe('replayExamples with a drifting handler', () => {
   });
 
   it('reports the drifting operation and passes the rest', () => {
-    expect(Object.fromEntries([...nested.results].filter(([name]) => name.startsWith('drifting')))).toEqual({
+    expect(
+      Object.fromEntries([...nested.results].filter(([name]) => name.startsWith('drifting'))),
+    ).toEqual({
       'drifting listWidgets/default': 'failed',
       'drifting listWidgets/limited': 'failed',
       'drifting listWidgets/signedOut': 'passed',

@@ -20,9 +20,7 @@ export function buildRoutes(spec: OpenApiDocument): Route[] {
   const routes: Route[] = [];
 
   for (const [path, item] of Object.entries(spec.paths)) {
-    for (const [method, operation] of Object.entries(
-      item as Record<string, SpecOperation>
-    )) {
+    for (const [method, operation] of Object.entries(item as Record<string, SpecOperation>)) {
       if (!operation?.operationId) continue;
 
       const params = [...path.matchAll(/\{(\w+)\}/g)].map((match) => match[1]);
@@ -43,11 +41,7 @@ export function buildRoutes(spec: OpenApiDocument): Route[] {
 }
 
 /** The route for this method and path, or undefined when the contract has none. */
-export function matchRoute(
-  routes: Route[],
-  method: string,
-  pathname: string
-): Route | undefined {
+export function matchRoute(routes: Route[], method: string, pathname: string): Route | undefined {
   return routes
     .filter((route) => route.pattern.test(pathname))
     .find((route) => route.method === method);
@@ -56,7 +50,5 @@ export function matchRoute(
 /** Path parameters by name, decoded. */
 export function pathParams(route: Route, pathname: string): Record<string, string> {
   const values = pathname.match(route.pattern)!.slice(1);
-  return Object.fromEntries(
-    route.params.map((name, i) => [name, decodeURIComponent(values[i])])
-  );
+  return Object.fromEntries(route.params.map((name, i) => [name, decodeURIComponent(values[i])]));
 }
