@@ -6,16 +6,16 @@ test for free. The engine lives in `src/engine/`.
 
 ## What the app passes in
 
-| Input | Meaning |
-| --- | --- |
-| `spec` | The OpenAPI document. Its paths become routes (literal paths beat `{param}` ones), its schemas are the contract every response is checked against. |
-| `createStore(clock)` | Builds a fresh store anchored on `clock` (YYYY-MM-DD). |
-| `handlers` | `operationId -> handler`. An operation without one answers 501. |
-| `storeKey` | The `globalThis` slot for the store, so dev hot reloads keep the data. |
-| `session?` | `{ cookie, value, login, logout }`. Defaults `session_token` / `mock-session`; no `login`/`logout` means the mock never sets or clears the cookie. |
-| `resetPath?` | `POST` here rebuilds the store, answers 204. Default `/api/__mock/reset`. |
-| `today?` | Default: `MOCK_TODAY`, else the real date. |
-| `hint?` | Appended to the 501 messages (e.g. "see lib/mock/handlers.ts"). |
+| Input                | Meaning                                                                                                                                            |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `spec`               | The OpenAPI document. Its paths become routes (literal paths beat `{param}` ones), its schemas are the contract every response is checked against. |
+| `createStore(clock)` | Builds a fresh store anchored on `clock` (YYYY-MM-DD).                                                                                             |
+| `handlers`           | `operationId -> handler`. An operation without one answers 501.                                                                                    |
+| `storeKey`           | The `globalThis` slot for the store, so dev hot reloads keep the data.                                                                             |
+| `session?`           | `{ cookie, value, login, logout }`. Defaults `session_token` / `mock-session`; no `login`/`logout` means the mock never sets or clears the cookie. |
+| `resetPath?`         | `POST` here rebuilds the store, answers 204. Default `/api/__mock/reset`.                                                                          |
+| `today?`             | Default: `MOCK_TODAY`, else the real date.                                                                                                         |
+| `hint?`              | Appended to the 501 messages (e.g. "see lib/mock/handlers.ts").                                                                                    |
 
 Type handlers with the generic types, narrowed to the app's own
 openapi-typescript `operations` and store:
@@ -36,7 +36,9 @@ import { handlers } from './handlers';
 import { createStore } from './store';
 
 export const mock = createMockEngine({
-  spec, createStore, handlers,
+  spec,
+  createStore,
+  handlers,
   storeKey: '__myAppMockStore',
   session: { login: 'verifyLoginCode', logout: 'logout' },
 });
@@ -66,8 +68,8 @@ import { mock } from '@/lib/mock/server';
 
 replayExamples({
   engine: mock,
-  recordings: recorded as Recordings,   // { clock, examples }
-  only: Object.keys(handlers),          // optional: others are skipped
+  recordings: recorded as Recordings, // { clock, examples }
+  only: Object.keys(handlers), // optional: others are skipped
 });
 ```
 

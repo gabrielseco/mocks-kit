@@ -8,8 +8,20 @@
       "response": {
         "status": 200,
         "body": [
-          { "slug": "anvil", "name": "Anvil", "price": 120.5, "created_on": "2026-01-15", "note": null },
-          { "slug": "bolt", "name": "Bolt", "price": 2.25, "created_on": "2026-01-14", "note": "zinc" },
+          {
+            "slug": "anvil",
+            "name": "Anvil",
+            "price": 120.5,
+            "created_on": "2026-01-15",
+            "note": null
+          },
+          {
+            "slug": "bolt",
+            "name": "Bolt",
+            "price": 2.25,
+            "created_on": "2026-01-14",
+            "note": "zinc"
+          },
           { "slug": "cog", "name": "Cog", "price": 9, "created_on": "2026-01-10", "note": null }
         ]
       }
@@ -21,8 +33,20 @@
       "response": {
         "status": 200,
         "body": [
-          { "slug": "anvil", "name": "Anvil", "price": 120.5, "created_on": "2026-01-15", "note": null },
-          { "slug": "bolt", "name": "Bolt", "price": 2.25, "created_on": "2026-01-14", "note": "zinc" }
+          {
+            "slug": "anvil",
+            "name": "Anvil",
+            "price": 120.5,
+            "created_on": "2026-01-15",
+            "note": null
+          },
+          {
+            "slug": "bolt",
+            "name": "Bolt",
+            "price": 2.25,
+            "created_on": "2026-01-14",
+            "note": "zinc"
+          }
         ]
       }
     },
@@ -38,7 +62,13 @@
       "request": { "method": "GET", "path": "/api/widgets/bolt", "query": {} },
       "response": {
         "status": 200,
-        "body": { "slug": "bolt", "name": "Bolt", "price": 2.25, "created_on": "2026-01-14", "note": "zinc" }
+        "body": {
+          "slug": "bolt",
+          "name": "Bolt",
+          "price": 2.25,
+          "created_on": "2026-01-14",
+          "note": "zinc"
+        }
       }
     },
     {
@@ -53,7 +83,13 @@
       "request": { "method": "GET", "path": "/api/widgets/featured", "query": {} },
       "response": {
         "status": 200,
-        "body": { "slug": "anvil", "name": "Anvil", "price": 120.5, "created_on": "2026-01-15", "note": null }
+        "body": {
+          "slug": "anvil",
+          "name": "Anvil",
+          "price": 120.5,
+          "created_on": "2026-01-15",
+          "note": null
+        }
       }
     },
     {

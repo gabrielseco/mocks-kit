@@ -2,12 +2,7 @@
 // contract describes, with no network and no backend. The app supplies the
 // contract, the store and the handlers; this file knows nothing about either.
 import { buildRoutes, matchRoute, pathParams, type Route } from './routes';
-import {
-  MockHttpError,
-  type AnyHandler,
-  type CreateStore,
-  type OpenApiDocument,
-} from './types';
+import { MockHttpError, type AnyHandler, type CreateStore, type OpenApiDocument } from './types';
 import { createValidator, type Validate } from './validate';
 
 export interface SessionConfig {
@@ -79,9 +74,7 @@ async function readBody(request: Request): Promise<unknown> {
   }
 }
 
-export function createMockEngine<Store>(
-  config: MockEngineConfig<Store>
-): MockEngine<Store> {
+export function createMockEngine<Store>(config: MockEngineConfig<Store>): MockEngine<Store> {
   const routes = buildRoutes(config.spec);
   const validate = createValidator(config.spec);
   const today = config.today ?? mockToday;
@@ -121,11 +114,7 @@ export function createMockEngine<Store>(
   // A mock response the contract does not allow is a bug in the mock. Surface
   // it as a 500 with the reason instead of handing the UI a shape the backend
   // would never send.
-  function contractProblems(
-    route: Route,
-    status: number,
-    body: unknown
-  ): string[] {
+  function contractProblems(route: Route, status: number, body: unknown): string[] {
     const declared = route.responses[String(status)];
     if (!declared) {
       return [`status ${status} is not declared for ${route.operationId}`];
@@ -135,9 +124,7 @@ export function createMockEngine<Store>(
     if (!schema) {
       return body === undefined ? [] : ['a body was sent where none is declared'];
     }
-    return body === undefined
-      ? ['no body was sent where one is declared']
-      : validate(body, schema);
+    return body === undefined ? ['no body was sent where one is declared'] : validate(body, schema);
   }
 
   async function handleMockRequest(request: Request): Promise<Response> {

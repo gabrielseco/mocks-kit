@@ -17,7 +17,9 @@
           },
           "401": {
             "description": "Wrong code",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Error" } }
+            }
           }
         }
       }
@@ -53,11 +55,15 @@
       "get": {
         "operationId": "getWidget",
         "security": [{ "cookieAuth": [] }],
-        "parameters": [{ "name": "slug", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "parameters": [
+          { "name": "slug", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
         "responses": {
           "200": {
             "description": "The widget",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Widget" } } }
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Widget" } }
+            }
           },
           "404": { "description": "No such widget" }
         }
@@ -65,7 +71,9 @@
       "delete": {
         "operationId": "deleteWidget",
         "security": [{ "cookieAuth": [] }],
-        "parameters": [{ "name": "slug", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "parameters": [
+          { "name": "slug", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
         "responses": {
           "204": { "description": "Deleted" },
           "404": { "description": "No such widget" }
@@ -79,7 +87,9 @@
         "responses": {
           "200": {
             "description": "The priciest widget",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Widget" } } }
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Widget" } }
+            }
           }
         }
       }
@@ -112,11 +122,15 @@
         "responses": {
           "201": {
             "description": "Created",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Widget" } } }
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Widget" } }
+            }
           },
           "422": {
             "description": "Invalid",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Error" } }
+            }
           }
         }
       }
