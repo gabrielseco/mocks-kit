@@ -18,7 +18,7 @@ describe('session cookie', () => {
 
     expect(response.status).toBe(200);
     expect(response.headers.get('set-cookie')).toBe(
-      'session_token=mock-session; Path=/; HttpOnly; SameSite=Lax; Max-Age=2592000'
+      'session_token=mock-session; Path=/; HttpOnly; SameSite=Lax; Max-Age=2592000',
     );
   });
 
@@ -47,7 +47,7 @@ describe('session cookie', () => {
 
     expect(response.status).toBe(204);
     expect(response.headers.get('set-cookie')).toBe(
-      'session_token=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0'
+      'session_token=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0',
     );
   });
 
@@ -65,8 +65,12 @@ describe('session cookie', () => {
 
     expect(custom.sessionCookie).toBe('sid=let-me-in');
     expect(login.headers.get('set-cookie')).toMatch(/^sid=let-me-in; /);
-    expect((await call(custom, 'GET', '/api/widgets', { cookie: 'sid=let-me-in' })).status).toBe(200);
-    expect((await call(custom, 'GET', '/api/widgets', { cookie: 'session_token=mock-session' })).status).toBe(401);
+    expect((await call(custom, 'GET', '/api/widgets', { cookie: 'sid=let-me-in' })).status).toBe(
+      200,
+    );
+    expect(
+      (await call(custom, 'GET', '/api/widgets', { cookie: 'session_token=mock-session' })).status,
+    ).toBe(401);
   });
 
   it('is never touched by an app with no login or logout operation configured', async () => {
@@ -150,7 +154,7 @@ describe('store across module reloads', () => {
     expect(reloaded.mockStore()).toBe(first.mockStore());
     expect(reloaded.mockStore()).toBe((globalThis as Record<string, unknown>)[STORE_KEY]);
     const names = (await call(reloaded.engine, 'GET', '/api/widgets')).body.map(
-      (w: { name: string }) => w.name
+      (w: { name: string }) => w.name,
     );
     expect(names).toContain('Nut');
   });
