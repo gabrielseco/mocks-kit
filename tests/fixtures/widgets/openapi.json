@@ -1,0 +1,183 @@
+{
+  "openapi": "3.0.3",
+  "info": { "title": "Widgets", "version": "1.0.0" },
+  "paths": {
+    "/api/auth/login": {
+      "post": {
+        "operationId": "login",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/LoginRequest" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Signed in",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/User" } } }
+          },
+          "401": {
+            "description": "Wrong code",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+          }
+        }
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "operationId": "logout",
+        "security": [{ "cookieAuth": [] }],
+        "responses": { "204": { "description": "Signed out" } }
+      }
+    },
+    "/api/health": {
+      "get": {
+        "operationId": "getHealth",
+        "responses": {
+          "200": {
+            "description": "Up",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status"],
+                  "additionalProperties": false,
+                  "properties": { "status": { "type": "string", "enum": ["ok"] } }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/widgets/{slug}": {
+      "get": {
+        "operationId": "getWidget",
+        "security": [{ "cookieAuth": [] }],
+        "parameters": [{ "name": "slug", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": {
+          "200": {
+            "description": "The widget",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Widget" } } }
+          },
+          "404": { "description": "No such widget" }
+        }
+      },
+      "delete": {
+        "operationId": "deleteWidget",
+        "security": [{ "cookieAuth": [] }],
+        "parameters": [{ "name": "slug", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": {
+          "204": { "description": "Deleted" },
+          "404": { "description": "No such widget" }
+        }
+      }
+    },
+    "/api/widgets/featured": {
+      "get": {
+        "operationId": "getFeaturedWidget",
+        "security": [{ "cookieAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "The priciest widget",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Widget" } } }
+          }
+        }
+      }
+    },
+    "/api/widgets": {
+      "get": {
+        "operationId": "listWidgets",
+        "security": [{ "cookieAuth": [] }],
+        "parameters": [{ "name": "limit", "in": "query", "schema": { "type": "integer" } }],
+        "responses": {
+          "200": {
+            "description": "Widgets by name",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Widget" } }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createWidget",
+        "security": [{ "cookieAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/WidgetInput" } }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Widget" } } }
+          },
+          "422": {
+            "description": "Invalid",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+          }
+        }
+      }
+    },
+    "/api/gadgets": {
+      "get": {
+        "operationId": "listGadgets",
+        "security": [{ "cookieAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Gadgets",
+            "content": {
+              "application/json": { "schema": { "type": "array", "items": { "type": "string" } } }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "cookieAuth": { "type": "apiKey", "in": "cookie", "name": "session_token" }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "required": ["error"],
+        "additionalProperties": false,
+        "properties": { "error": { "type": "string" } }
+      },
+      "LoginRequest": {
+        "type": "object",
+        "required": ["code"],
+        "properties": { "code": { "type": "string" } }
+      },
+      "User": {
+        "type": "object",
+        "required": ["email"],
+        "additionalProperties": false,
+        "properties": { "email": { "type": "string" } }
+      },
+      "Widget": {
+        "type": "object",
+        "required": ["slug", "name", "price", "created_on"],
+        "additionalProperties": false,
+        "properties": {
+          "slug": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+          "name": { "type": "string" },
+          "price": { "type": "number" },
+          "created_on": { "type": "string", "format": "date" },
+          "note": { "type": "string", "nullable": true }
+        }
+      },
+      "WidgetInput": {
+        "type": "object",
+        "required": ["name", "price"],
+        "properties": {
+          "name": { "type": "string" },
+          "price": { "type": "number" }
+        }
+      }
+    }
+  }
+}
