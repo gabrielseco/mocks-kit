@@ -15,8 +15,7 @@ export type Handlers = EngineHandlers<operations, Store, Exclude<OperationId, 'l
 
 export const LOGIN_CODE = '123456';
 
-const byName = (store: Store) =>
-  [...store.widgets].sort((a, b) => a.name.localeCompare(b.name));
+const byName = (store: Store) => [...store.widgets].sort((a, b) => a.name.localeCompare(b.name));
 
 export const handlers: Handlers = {
   login: ({ body, store }) =>

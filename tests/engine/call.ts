@@ -14,7 +14,7 @@ export async function call<Store>(
   engine: MockEngine<Store>,
   method: string,
   path: string,
-  { body, raw, signedIn = true, cookie }: CallOptions = {}
+  { body, raw, signedIn = true, cookie }: CallOptions = {},
 ) {
   const headers: Record<string, string> = {};
   const sent = cookie ?? (signedIn ? engine.sessionCookie : undefined);
@@ -25,7 +25,7 @@ export async function call<Store>(
       method,
       headers,
       body: raw ?? (body === undefined ? undefined : JSON.stringify(body)),
-    })
+    }),
   );
   const text = await response.text();
   return {

@@ -13,5 +13,5 @@
     "types": ["node"]
   },
   "include": ["src", "tests", "vitest.config.ts"],
-  "exclude": ["node_modules", "vendor"]
+  "exclude": ["node_modules"]
 }

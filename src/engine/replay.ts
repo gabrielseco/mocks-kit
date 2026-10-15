@@ -55,7 +55,7 @@ export function replayExamples<Store>({
           new Request(url, {
             method: example.request.method,
             headers: signedOut(example) ? {} : { cookie: engine.sessionCookie },
-          })
+          }),
         );
 
         const text = await response.text();

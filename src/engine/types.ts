@@ -43,8 +43,11 @@ export type MockResult<Ops, Op extends keyof Ops> = {
 // Query and path values arrive as strings, whatever type the contract gives them.
 type Strings<T> = { [K in keyof NonNullable<T>]?: string };
 
-type ParametersIn<Ops, Op extends keyof Ops, Where extends string> =
-  Ops[Op] extends { parameters: { [W in Where]?: infer P } } ? P : undefined;
+type ParametersIn<Ops, Op extends keyof Ops, Where extends string> = Ops[Op] extends {
+  parameters: { [W in Where]?: infer P };
+}
+  ? P
+  : undefined;
 
 // The JSON body the contract declares, whether or not it marks it required:
 // a handler for an operation with a body always gets an object to read.
@@ -70,7 +73,7 @@ export interface MockRequest<Ops, Op extends keyof Ops, Store> {
 }
 
 export type Handler<Ops, Op extends keyof Ops, Store> = (
-  request: MockRequest<Ops, Op, Store>
+  request: MockRequest<Ops, Op, Store>,
 ) => MockResult<Ops, Op>;
 
 /**
@@ -91,7 +94,7 @@ export type AnyHandler = (request: never) => { status: number; body?: unknown };
 export class MockHttpError extends Error {
   constructor(
     public status: number,
-    message: string
+    message: string,
   ) {
     super(message);
   }

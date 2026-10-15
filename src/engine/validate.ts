@@ -37,9 +37,7 @@ function stringErrors(value: string, schema: Schema, path: string): string[] {
     errors.push(`${path}: ${JSON.stringify(value)} is not a UUID`);
   }
   if (schema.pattern && !new RegExp(schema.pattern).test(value)) {
-    errors.push(
-      `${path}: ${JSON.stringify(value)} does not match ${schema.pattern}`
-    );
+    errors.push(`${path}: ${JSON.stringify(value)} does not match ${schema.pattern}`);
   }
   return errors;
 }
@@ -56,11 +54,7 @@ export function createValidator(spec: OpenApiDocument): Validate {
     return found;
   }
 
-  function objectErrors(
-    value: Record<string, Json>,
-    schema: Schema,
-    path: string
-  ): string[] {
+  function objectErrors(value: Record<string, Json>, schema: Schema, path: string): string[] {
     const properties = schema.properties ?? {};
     const errors: string[] = [];
 
@@ -81,9 +75,7 @@ export function createValidator(spec: OpenApiDocument): Validate {
     const schema = resolve(ref);
 
     if (value === null) {
-      return schema.nullable || !schema.type
-        ? []
-        : [`${path}: is null, expected ${schema.type}`];
+      return schema.nullable || !schema.type ? [] : [`${path}: is null, expected ${schema.type}`];
     }
     if (schema.enum && !schema.enum.includes(value)) {
       return [`${path}: ${JSON.stringify(value)} is not one of ${schema.enum}`];
@@ -100,9 +92,7 @@ export function createValidator(spec: OpenApiDocument): Validate {
       case 'array':
         return actual === 'array'
           ? (value as Json[]).flatMap((item, index) =>
-              schema.items
-                ? validate(item, schema.items, `${path}[${index}]`)
-                : []
+              schema.items ? validate(item, schema.items, `${path}[${index}]`) : [],
             )
           : [`${path}: is ${actual}, expected array`];
       case 'string':
@@ -110,13 +100,9 @@ export function createValidator(spec: OpenApiDocument): Validate {
           ? stringErrors(value as string, schema, path)
           : [`${path}: is ${actual}, expected string`];
       case 'integer':
-        return Number.isInteger(value)
-          ? []
-          : [`${path}: is ${actual}, expected integer`];
+        return Number.isInteger(value) ? [] : [`${path}: is ${actual}, expected integer`];
       default:
-        return actual === schema.type
-          ? []
-          : [`${path}: is ${actual}, expected ${schema.type}`];
+        return actual === schema.type ? [] : [`${path}: is ${actual}, expected ${schema.type}`];
     }
   }
 

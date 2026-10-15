@@ -42,7 +42,7 @@ describe('contract violations', () => {
 
     expect(response.status).toBe(500);
     expect(response.body.error).toBe(
-      'The mock getWidget response breaks the contract: status 418 is not declared for getWidget'
+      'The mock getWidget response breaks the contract: status 418 is not declared for getWidget',
     );
   });
 
@@ -50,7 +50,9 @@ describe('contract violations', () => {
     const engine = engineWith({
       listWidgets: () => ({
         status: 200,
-        body: [{ slug: 'Not A Slug', name: 'X', price: 1, created_on: '15/01/2026', colour: 'red' }],
+        body: [
+          { slug: 'Not A Slug', name: 'X', price: 1, created_on: '15/01/2026', colour: 'red' },
+        ],
       }),
       getFeaturedWidget: () => ({ status: 200, body: { slug: 'x', name: 'X', price: 1 } }),
     });
