@@ -1,0 +1,72 @@
+{
+  "clock": "2026-01-15",
+  "examples": [
+    {
+      "operationId": "listWidgets",
+      "name": "default",
+      "request": { "method": "GET", "path": "/api/widgets", "query": {} },
+      "response": {
+        "status": 200,
+        "body": [
+          { "slug": "anvil", "name": "Anvil", "price": 120.5, "created_on": "2026-01-15", "note": null },
+          { "slug": "bolt", "name": "Bolt", "price": 2.25, "created_on": "2026-01-14", "note": "zinc" },
+          { "slug": "cog", "name": "Cog", "price": 9, "created_on": "2026-01-10", "note": null }
+        ]
+      }
+    },
+    {
+      "operationId": "listWidgets",
+      "name": "limited",
+      "request": { "method": "GET", "path": "/api/widgets", "query": { "limit": "2" } },
+      "response": {
+        "status": 200,
+        "body": [
+          { "slug": "anvil", "name": "Anvil", "price": 120.5, "created_on": "2026-01-15", "note": null },
+          { "slug": "bolt", "name": "Bolt", "price": 2.25, "created_on": "2026-01-14", "note": "zinc" }
+        ]
+      }
+    },
+    {
+      "operationId": "listWidgets",
+      "name": "signedOut",
+      "request": { "method": "GET", "path": "/api/widgets", "query": {} },
+      "response": { "status": 401, "body": { "error": "Unauthorized" } }
+    },
+    {
+      "operationId": "getWidget",
+      "name": "default",
+      "request": { "method": "GET", "path": "/api/widgets/bolt", "query": {} },
+      "response": {
+        "status": 200,
+        "body": { "slug": "bolt", "name": "Bolt", "price": 2.25, "created_on": "2026-01-14", "note": "zinc" }
+      }
+    },
+    {
+      "operationId": "getWidget",
+      "name": "notFound",
+      "request": { "method": "GET", "path": "/api/widgets/nope", "query": {} },
+      "response": { "status": 404, "body": null }
+    },
+    {
+      "operationId": "getFeaturedWidget",
+      "name": "default",
+      "request": { "method": "GET", "path": "/api/widgets/featured", "query": {} },
+      "response": {
+        "status": 200,
+        "body": { "slug": "anvil", "name": "Anvil", "price": 120.5, "created_on": "2026-01-15", "note": null }
+      }
+    },
+    {
+      "operationId": "getHealth",
+      "name": "default",
+      "request": { "method": "GET", "path": "/api/health", "query": {} },
+      "response": { "status": 200, "body": { "status": "ok" } }
+    },
+    {
+      "operationId": "listGadgets",
+      "name": "default",
+      "request": { "method": "GET", "path": "/api/gadgets", "query": {} },
+      "response": { "status": 200, "body": ["sprocket"] }
+    }
+  ]
+}
